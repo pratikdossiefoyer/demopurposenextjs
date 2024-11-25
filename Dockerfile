@@ -1,37 +1,23 @@
-# Build stage
-FROM node:18-alpine AS builder
+# Use an official Node.js runtime as the base image
+FROM node:18-alpine
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package files
+# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy all files
+# Copy the rest of the application code
 COPY . .
 
 # Build the Next.js application
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS runner
+# Expose the port the app runs on
+EXPOSE 8189
 
-WORKDIR /app
-
-# Copy necessary files from builder
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
-
-# Expose the port Next.js runs on
-EXPOSE 80
-
-# Set environment variables
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
-
-# Start the application
+# Define the command to run the app
 CMD ["npm", "start"]

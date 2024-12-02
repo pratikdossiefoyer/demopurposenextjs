@@ -23,7 +23,7 @@ const Home = () => {
           <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
 
           <p className="text-xl text-gray-700 text-center leading-relaxed">
-            You have successfully deployed your code from latest git ! 🎉
+            You have successfully deployed your code from latest git , Here we using time build ! 🎉
           </p>
 
           <div className="flex gap-4 mt-6">
